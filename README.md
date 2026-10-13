@@ -13,6 +13,12 @@ Focus Lane is a small, local browser sidebar for choosing one task and working o
 
 Task data and reflections stay in the browser's local extension storage. Chrome and Firefox each keep their own copy. There is no account, cloud sync, calendar sync, or AI service connection.
 
+## Try the browser demo
+
+Run `npm run demo`, then open [http://127.0.0.1:4173/](http://127.0.0.1:4173/) in a browser. The demo starts with two sample tasks, so you can select a task, start a timer, complete it, and try the schedule. It saves demo changes in that browser's local storage. Stop the demo server with `Ctrl+C`.
+
+Opening `sidepanel.html` directly as a `file://` page does not run the app. The extension uses browser APIs, and the demo supplies local replacements through its server.
+
 ## Build
 
 Install [Node.js 18 or newer](https://nodejs.org/), clone this repository, and run:

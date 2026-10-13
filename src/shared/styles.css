@@ -182,3 +182,5 @@ dialog form { display: grid; gap: 10px; padding: 21px; }
 .focus-queue-details[open] > summary::before { content: "▾"; }
 .focus-queue-content { border-top: 1px solid var(--line); padding: 0 11px 11px; }
 .focus-queue-content .task-help { margin: 10px 0 9px; }
+
+.demo-notice { background: #fff5df; border: 1px solid #e6d5a9; border-radius: 9px; color: #5d4b26; font-size: 12px; margin-bottom: 12px; padding: 9px 11px; }

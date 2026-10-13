@@ -56,6 +56,7 @@ async function boot() {
   state = { ...structuredClone(DEFAULTS), ...stored, settings: { ...DEFAULTS.settings, ...(stored.settings || {}) } };
   await applyTaskSeed();
   $("#date-label").textContent = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "short", day: "numeric" }).format(new Date());
+  $("#demo-notice").hidden = !ext.isDemo;
   $("#work-start").value = state.settings.workStart;
   $("#work-end").value = state.settings.workEnd;
   if (!["focus5", "focus10", "focus15", "focus25"].includes(state.selectedMode)) state.selectedMode = "focus25";
