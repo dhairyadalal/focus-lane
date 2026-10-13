@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Lane",
+  "version": "0.1.0",
+  "description": "A local task queue and focus timer in Firefox's sidebar.",
+  "permissions": ["storage", "alarms"],
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+  "sidebar_action": {
+    "default_title": "Focus Lane",
+    "default_panel": "sidepanel.html",
+    "open_at_install": true
+  },
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Open Focus Lane"
+    }
+  }
+}

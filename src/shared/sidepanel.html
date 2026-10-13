@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Focus Lane</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main data-focus-lane="shared">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow" id="date-label"></p>
+          <h1>Focus Lane</h1>
+        </div>
+      </header>
+
+      <section class="selected-task-card" id="selected-task-card" aria-live="polite">
+        <p class="section-label">Selected task</p>
+        <h2 id="selected-task-title">Choose a task below</h2>
+        <p id="selected-task-action">Your next action will stay here while you work.</p>
+        <p class="selected-task-meta" id="selected-task-meta"></p>
+      </section>
+
+      <section class="timer-card" id="timer-card">
+        <div class="timer-header"><p class="section-label" id="session-label">Timer</p><p class="timer" id="timer">25:00</p></div>
+        <div class="timer-controls">
+          <label for="focus-minutes">Duration
+            <select id="focus-minutes" aria-label="Focus duration">
+              <option value="5">5 minutes</option>
+              <option value="10">10 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="25" selected>25 minutes</option>
+            </select>
+          </label>
+          <button class="primary" id="start-focus">Start</button>
+          <button class="secondary" id="end-focus" hidden>End</button>
+        </div>
+        <details class="box-breathing">
+          <summary><span>Start here first</span><span class="summary-muted">Box breathing</span></summary>
+          <div class="box-breathing-content">
+            <p class="section-label">How to practice box breathing</p>
+            <ol>
+              <li><strong>Step 1: Exhale.</strong> Sit up straight and slowly let all the air out of your lungs through your mouth.</li>
+              <li><strong>Step 2: Inhale.</strong> Breathe in slowly and deeply through your nose to a count of four, filling your lungs completely.</li>
+              <li><strong>Step 3: Hold.</strong> Hold the air in your lungs for a slow count of four.</li>
+              <li><strong>Step 4: Pause.</strong> Exhale slowly through your mouth for four seconds, then hold your empty lungs for another count of four.</li>
+            </ol>
+          </div>
+        </details>
+      </section>
+
+      <nav aria-label="Focus Lane views">
+        <button class="tab active" data-tab="today">Today</button>
+        <button class="tab" data-tab="completed">Completed</button>
+        <button class="tab" data-tab="settings">Settings</button>
+      </nav>
+
+      <section class="panel active" id="today-panel">
+        <details class="capture-details">
+          <summary>What needs doing?</summary>
+          <form id="task-form" class="capture-form">
+            <div class="capture-row">
+              <input id="task-title" autocomplete="off" placeholder="Draft the fellowship feedback" required />
+              <button class="primary compact" type="submit">Add</button>
+            </div>
+            <div class="task-options">
+              <label>Estimate <select id="task-minutes"><option>5</option><option>10</option><option>15</option><option selected>25</option><option>50</option><option>75</option><option>90</option></select> min</label>
+              <label>Project <input id="task-project" placeholder="Optional" /></label>
+            </div>
+          </form>
+        </details>
+        <details class="focus-queue-details">
+          <summary>Focus queue</summary>
+          <div class="focus-queue-content">
+            <p class="muted task-help">Choose a task to load it above, then start a block.</p>
+            <div class="task-list" id="task-list"></div>
+          </div>
+        </details>
+
+        <details class="schedule-details">
+          <summary><span>Schedule</span><span class="summary-muted">Work blocks and commitments</span></summary>
+          <div class="schedule-content">
+            <div class="schedule-toolbar"><p class="muted">Today’s protected time</p><button class="text-button" id="reset-day" type="button">Clear work blocks</button></div>
+            <div class="day-timeline" id="timeline"></div>
+            <details class="work-block-entry">
+              <summary>Block work time</summary>
+              <form id="work-block-form" class="inline-form work-block-form">
+                <input id="work-block-title" placeholder="Project work" required />
+                <input id="work-time" type="time" required aria-label="Start time" />
+                <select id="work-minutes" aria-label="Duration"><option>5</option><option>10</option><option>15</option><option selected>25</option><option>50</option><option>75</option><option>90</option></select>
+                <button class="secondary compact" type="submit">Block</button>
+              </form>
+              <p class="small muted" id="work-block-note" aria-live="polite"></p>
+            </details>
+            <details class="meeting-entry">
+              <summary>Block a meeting or commitment</summary>
+              <form id="meeting-form" class="inline-form">
+                <input id="meeting-title" placeholder="Team meeting" required />
+                <input id="meeting-time" type="time" required />
+                <select id="meeting-minutes"><option>15</option><option selected>30</option><option>45</option><option>60</option><option>90</option></select>
+                <button class="secondary compact" type="submit">Block</button>
+              </form>
+            </details>
+          </div>
+        </details>
+      </section>
+
+      <section class="panel" id="completed-panel">
+        <div class="list-header completed-header"><div><p class="section-label">Completed</p><p class="muted">Tasks you have finished</p></div><span id="completed-count"></span></div>
+        <div class="completed-list" id="completed-list"></div>
+      </section>
+
+      <section class="panel" id="settings-panel">
+        <p class="section-label">Planning window</p>
+        <form id="settings-form" class="settings-form">
+          <label>Start <input id="work-start" type="time" /></label>
+          <label>End <input id="work-end" type="time" /></label>
+          <button class="primary" type="submit">Save settings</button>
+        </form>
+        <p class="small muted">Work blocks and commitments are stored in this browser.</p>
+      </section>
+    </main>
+
+    <dialog id="reflection-dialog">
+      <form method="dialog" id="reflection-form">
+        <p class="section-label">Block complete</p>
+        <h2>What changed?</h2>
+        <label>Progress <textarea id="reflection-progress" rows="3" placeholder="What did you actually get done?"></textarea></label>
+        <label>What got in the way? <input id="reflection-blocker" placeholder="Optional" /></label>
+        <label>Next physical action <input id="reflection-next" placeholder="Open the draft and write the first heading" /></label>
+        <div class="dialog-actions"><button class="secondary" value="cancel">Discard</button><button class="primary" value="save">Save and replan</button></div>
+      </form>
+    </dialog>
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>
